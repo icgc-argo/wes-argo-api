@@ -1,6 +1,6 @@
 spring:
     application:
-        name: Workflow Search
+        name: wes-argo-api
 
 server:
     port : 8080
