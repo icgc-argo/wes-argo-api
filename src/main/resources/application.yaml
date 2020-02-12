@@ -3,7 +3,7 @@ spring:
         name: Workflow Search
 
 server:
-    port : 8082
+    port : 8080
 
 elastic:
     host: localhost
@@ -11,3 +11,12 @@ elastic:
     workflowIndex: workflow
     taskIndex: task
     maestroIndex: file_centric_1.0
+
+graphql:
+    servlet:
+        mapping: /graphql
+        enabled: true
+        corsEnabled: true
+        # if you want to @ExceptionHandler annotation for custom GraphQLErrors
+#        exception-handlers-enabled: true
+#        contextSetting: PER_REQUEST_WITH_INSTRUMENTATION
