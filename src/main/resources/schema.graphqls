@@ -10,7 +10,7 @@ type Sample {
 
 type Analysis {
     id: String!
-    type: String! 
+    type: String!
     runs: [Run]
 }
 
