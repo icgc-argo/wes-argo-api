@@ -1,0 +1,45 @@
+type Donor {
+    sample: Sample
+}
+
+type Sample {
+    sampleType: String
+    sequencingStrategy: String
+    analysis: [Analysis]
+}
+
+type Analysis {
+    id: String!
+    type: String! 
+    runs: [Run]
+}
+
+type Run {
+    runName: String!
+    workDir: String!
+    state: String
+    request: RunRequest
+}
+
+scalar JSON
+type RunRequest {
+    workflowUrl: String!
+    workflowParams: JSON!
+    workflowEngineParams: WorkflowEngineParams
+    workflowType: String
+    workflowTypeVersion: String
+}
+
+type WorkflowEngineParams {
+    revision: String
+    resume: String
+    workDir: String
+}
+
+type Query {
+    run(runName: String!): Run
+    runs: [Run]
+
+    analysis(id: String!): Analysis
+    analyses: [Analysis]
+}
