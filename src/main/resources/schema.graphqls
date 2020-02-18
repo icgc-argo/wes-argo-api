@@ -26,14 +26,13 @@ type RunRequest {
     workflowUrl: String!
     workflowParams: JSON!
     workflowEngineParams: WorkflowEngineParams
-    workflowType: String
-    workflowTypeVersion: String
 }
 
 type WorkflowEngineParams {
     revision: String
     resume: String
     workDir: String
+    latest: Boolean
 }
 
 type Query {
