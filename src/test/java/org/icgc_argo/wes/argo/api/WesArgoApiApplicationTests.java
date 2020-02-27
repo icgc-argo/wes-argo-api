@@ -1,13 +1,11 @@
 package org.icgc_argo.wes.argo.api;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WesArgoApiApplicationTests {
+public class WesArgoApiApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+  @Test
+  public void contextLoads() {}
 }

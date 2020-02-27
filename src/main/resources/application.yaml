@@ -8,8 +8,6 @@ server:
 elastic:
     host: localhost
     port: 9200
-    workflowIndex: workflow
-    taskIndex: task
     maestroIndex: file_centric_1.0
 
 graphql:
@@ -17,6 +15,7 @@ graphql:
         mapping: /graphql
         enabled: true
         corsEnabled: true
-        # if you want to @ExceptionHandler annotation for custom GraphQLErrors
-#        exception-handlers-enabled: true
-#        contextSetting: PER_REQUEST_WITH_INSTRUMENTATION
+    playground:
+        enabled: true
+        cdn:
+            enabled: false

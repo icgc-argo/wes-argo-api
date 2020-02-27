@@ -1,44 +1,16 @@
 type Donor {
-    sample: Sample
-}
-
-type Sample {
-    sampleType: String
-    sequencingStrategy: String
-    analysis: [Analysis]
+    donorId: String!
+    submittedId: String!
 }
 
 type Analysis {
-    id: String!
-    type: String!
-    runs: [Run]
-}
-
-type Run {
-    runName: String!
-    workDir: String!
-    state: String
-    request: RunRequest
-}
-
-scalar JSON
-type RunRequest {
-    workflowUrl: String!
-    workflowParams: JSON!
-    workflowEngineParams: WorkflowEngineParams
-}
-
-type WorkflowEngineParams {
-    revision: String
-    resume: String
-    workDir: String
-    latest: Boolean
+    analysisId: String!
+    analysisTypeVersion: Int!
+    analysisTypeName: String!
+    donors: [Donor]!
 }
 
 type Query {
-    run(runName: String!): Run
-    runs: [Run]
-
-    analysis(id: String!): Analysis
-    analyses: [Analysis]
+    donorById(donorId: String!): Donor
+    analysisById(analysisId: String!): Analysis
 }

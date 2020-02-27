@@ -21,12 +21,12 @@ public class ElasticsearchConfig {
   @Bean
   public RestHighLevelClient restHighLevelClient() {
     return new RestHighLevelClient(
-            RestClient.builder(new HttpHost(properties.getHost(), properties.getPort()))
-                    .setRequestConfigCallback(
-                            config ->
-                                    config
-                                            .setConnectTimeout(15_000)
-                                            .setConnectionRequestTimeout(15_000)
-                                            .setSocketTimeout(15_000)));
+        RestClient.builder(new HttpHost(properties.getHost(), properties.getPort()))
+            .setRequestConfigCallback(
+                config ->
+                    config
+                        .setConnectTimeout(15_000)
+                        .setConnectionRequestTimeout(15_000)
+                        .setSocketTimeout(15_000)));
   }
 }

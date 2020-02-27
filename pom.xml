@@ -5,24 +5,31 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.4.RELEASE</version>
+		<version>2.1.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.icgc_argo</groupId>
-	<artifactId>WES-ARGO-API</artifactId>
+	<artifactId>wes-argo-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>WES-ARGO-API</name>
+	<name>wes-argo-api</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<elasticsearch.version>7.4.0</elasticsearch.version>
+		<jackson-databind.version>2.9.10.1</jackson-databind.version>
+		<jackson-dataformat-yaml.version>2.3.0</jackson-dataformat-yaml.version>
 	</properties>
+
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,66 +54,55 @@
 			</exclusions>
 		</dependency>
 
-		<!-- graphql-spring-boot -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphql-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-		</dependency>
-
-		<!-- to embed Altair tool -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>altair-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- to embed GraphiQL tool -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphiql-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- to embed Voyager tool -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>voyager-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- graphql-java-->
+		<!-- Graphql java dependencies -->
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java</artifactId>
-			<version>14.0</version>
+			<version>11.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-spring-boot-starter-webmvc</artifactId>
+			<version>2019-06-24T11-47-27-31ab4f9</version>
+		</dependency>
 		<dependency>
 			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-java-extended-scalars</artifactId>
-			<version>1.0.1</version>
+			<version>2019-08-31T02-34-04-3decba9</version>
 		</dependency>
-
-		<!-- testing facilities -->
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphql-spring-boot-starter-test</artifactId>
-			<version>6.0.0</version>
-			<scope>test</scope>
+			<artifactId>playground-spring-boot-starter</artifactId>
+			<version>6.0.1</version>
 		</dependency>
-		<!-- graphql-spring-boot -->
+		<!-- Graphql java dependencies -->
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>26.0-jre</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.2</version>
+			<scope>provided</scope>
 		</dependency>
 
-		<!-- elasticsearch-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>${jackson-dataformat-yaml.version}</version>
+		</dependency>
+
+
+		<!-- Elasticsearch dependencies -->
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
@@ -117,8 +113,13 @@
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
 			<version>${elasticsearch.version}</version>
 		</dependency>
-		<!-- elasticsearch-->
-
+		<!-- Elasticsearch dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -126,6 +127,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.coveo</groupId>
+				<artifactId>fmt-maven-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

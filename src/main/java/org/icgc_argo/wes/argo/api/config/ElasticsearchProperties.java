@@ -8,11 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "elastic")
 public class ElasticsearchProperties {
-
   String host;
   Integer port;
-  String workflowIndex;
-  String taskIndex;
   String maestroIndex;
-
 }
