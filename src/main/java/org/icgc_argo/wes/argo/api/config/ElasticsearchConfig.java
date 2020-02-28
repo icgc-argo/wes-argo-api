@@ -34,45 +34,44 @@ public class ElasticsearchConfig {
       return secureRestHighLevelClient();
     }
     return new RestHighLevelClient(
-            RestClient.builder(
-                    new HttpHost(
-                            properties.getHost(),
-                            properties.getPort(),
-                            properties.getUseHttps() ? "https" : "http"))
-                    .setRequestConfigCallback(
-                            config ->
-                                    config
-                                            .setConnectTimeout(connectTimeout)
-                                            .setConnectionRequestTimeout(connectionRequestTimeout)
-                                            .setSocketTimeout(socketTimeout)));
-
+        RestClient.builder(
+                new HttpHost(
+                    properties.getHost(),
+                    properties.getPort(),
+                    properties.getUseHttps() ? "https" : "http"))
+            .setRequestConfigCallback(
+                config ->
+                    config
+                        .setConnectTimeout(connectTimeout)
+                        .setConnectionRequestTimeout(connectionRequestTimeout)
+                        .setSocketTimeout(socketTimeout)));
   }
 
   private RestHighLevelClient secureRestHighLevelClient() {
     final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
     credentialsProvider.setCredentials(
-            AuthScope.ANY,
-            new UsernamePasswordCredentials(properties.getUsername(), properties.getPassword()));
+        AuthScope.ANY,
+        new UsernamePasswordCredentials(properties.getUsername(), properties.getPassword()));
 
     return new RestHighLevelClient(
-            RestClient.builder(
-                    new HttpHost(
-                            properties.getHost(),
-                            properties.getPort(),
-                            properties.getUseHttps() ? "https" : "http"))
-                    .setRequestConfigCallback(
-                            config ->
-                                    config
-                                            .setConnectTimeout(connectTimeout)
-                                            .setConnectionRequestTimeout(connectionRequestTimeout)
-                                            .setSocketTimeout(socketTimeout))
-                    .setHttpClientConfigCallback(
-                            new RestClientBuilder.HttpClientConfigCallback() {
-                              @Override
-                              public HttpAsyncClientBuilder customizeHttpClient(
-                                      HttpAsyncClientBuilder httpClientBuilder) {
-                                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-                              }
-                            }));
+        RestClient.builder(
+                new HttpHost(
+                    properties.getHost(),
+                    properties.getPort(),
+                    properties.getUseHttps() ? "https" : "http"))
+            .setRequestConfigCallback(
+                config ->
+                    config
+                        .setConnectTimeout(connectTimeout)
+                        .setConnectionRequestTimeout(connectionRequestTimeout)
+                        .setSocketTimeout(socketTimeout))
+            .setHttpClientConfigCallback(
+                new RestClientBuilder.HttpClientConfigCallback() {
+                  @Override
+                  public HttpAsyncClientBuilder customizeHttpClient(
+                      HttpAsyncClientBuilder httpClientBuilder) {
+                    return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                  }
+                }));
   }
 }

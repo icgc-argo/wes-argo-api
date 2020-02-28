@@ -1,5 +1,7 @@
 package org.icgc_argo.wes.argo.api.fetchers;
 
+import static org.icgc_argo.wes.argo.api.util.Converter.buildAnalysis;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.NonNull;
@@ -7,11 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.icgc_argo.wes.argo.api.graphql.model.Analysis;
 import org.icgc_argo.wes.argo.api.service.ArgoService;
-import org.icgc_argo.wes.argo.api.util.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import static org.icgc_argo.wes.argo.api.util.Converter.buildAnalysis;
 
 @Slf4j
 @Component

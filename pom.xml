@@ -16,11 +16,10 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<elasticsearch.version>7.4.0</elasticsearch.version>
+		<elasticsearch.version>7.6.0</elasticsearch.version>
 		<jackson-databind.version>2.9.10.1</jackson-databind.version>
 		<jackson-dataformat-yaml.version>2.3.0</jackson-dataformat-yaml.version>
 	</properties>
-
 
 	<dependencies>
 		<dependency>
@@ -101,7 +100,6 @@
 			<version>${jackson-dataformat-yaml.version}</version>
 		</dependency>
 
-
 		<!-- Elasticsearch dependencies -->
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
@@ -114,6 +112,7 @@
 			<version>${elasticsearch.version}</version>
 		</dependency>
 		<!-- Elasticsearch dependencies -->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

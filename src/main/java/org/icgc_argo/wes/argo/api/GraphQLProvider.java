@@ -36,7 +36,9 @@ public class GraphQLProvider {
   }
 
   @Autowired
-  public GraphQLProvider(@NonNull AnalysisDataFetcher analysisDataFetcher, @NonNull DonorDataFetcher donorDataFetcher) {
+  public GraphQLProvider(
+      @NonNull AnalysisDataFetcher analysisDataFetcher,
+      @NonNull DonorDataFetcher donorDataFetcher) {
     this.analysisDataFetcher = analysisDataFetcher;
     this.donorDataFetcher = donorDataFetcher;
   }

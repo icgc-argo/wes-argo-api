@@ -29,9 +29,6 @@ public class Converter {
   }
 
   public static Donor buildDonor(@NonNull FileCentricDonor source) {
-    return Donor.builder()
-            .donorId(source.getId())
-            .submittedId(source.getSubmittedId())
-            .build();
+    return Donor.builder().donorId(source.getId()).submittedId(source.getSubmittedId()).build();
   }
 }

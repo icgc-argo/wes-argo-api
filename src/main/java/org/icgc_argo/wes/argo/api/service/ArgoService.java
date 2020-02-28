@@ -16,13 +16,11 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.icgc_argo.wes.argo.api.config.ElasticsearchProperties;
 import org.icgc_argo.wes.argo.api.exceptions.NotFoundException;
-import org.icgc_argo.wes.argo.api.graphql.model.Donor;
 import org.icgc_argo.wes.argo.api.index.model.FileCentricDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,16 +68,16 @@ public class ArgoService {
     }
   }
 
-  public Optional<FileCentricDocument> getFileCentricDocumentByDonorId(@NonNull String donorId){
+  public Optional<FileCentricDocument> getFileCentricDocumentByDonorId(@NonNull String donorId) {
     try {
       val search = getDocByDonorIdAsJson(donorId);
 
       val customMapper =
-              new ObjectMapper()
-                      .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-                      .registerModule(new JavaTimeModule())
-                      .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
-                      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+          new ObjectMapper()
+              .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+              .registerModule(new JavaTimeModule())
+              .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+              .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
       val doc = customMapper.readValue(search, FileCentricDocument.class);
 
@@ -95,7 +93,7 @@ public class ArgoService {
     return search;
   }
 
-  private String getDocByDonorIdAsJson(@NonNull String donorId){
+  private String getDocByDonorIdAsJson(@NonNull String donorId) {
     val hit = searchByDonorId(donorId);
     val search = hit.getSourceAsString();
     return search;
@@ -109,7 +107,8 @@ public class ArgoService {
       val hits = searchResponse.getHits().getHits();
 
       NotFoundException.checkNotFound(
-          hits != null && hits.length > 0, format("Cannot find file centric document with analysis id = %s", id));
+          hits != null && hits.length > 0,
+          format("Cannot find file centric document with analysis id = %s", id));
 
       return hits[0];
     } catch (NotFoundException e) {
@@ -120,24 +119,25 @@ public class ArgoService {
   private SearchHit searchByDonorId(@NonNull String donorId) {
     try {
       val searchSourceBuilder = new SearchSourceBuilder();
-      searchSourceBuilder.query(
-              QueryBuilders
-                      .nestedQuery("donors",
-                              QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("donors.id", donorId)),
-                              ScoreMode.Avg))
-              .size(DEFAULT_HIT_SIZE);
+      searchSourceBuilder
+          .query(
+              QueryBuilders.nestedQuery(
+                  "donors",
+                  QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("donors.id", donorId)),
+                  ScoreMode.Avg))
+          .size(DEFAULT_HIT_SIZE);
       val searchResponse = search(searchSourceBuilder, maestroIndex);
       val hits = searchResponse.getHits().getHits();
 
       NotFoundException.checkNotFound(
-              hits != null && hits.length > 0, format("Cannot find file centric document with donor id = %s", donorId));
+          hits != null && hits.length > 0,
+          format("Cannot find file centric document with donor id = %s", donorId));
 
       return hits[0];
     } catch (NotFoundException e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }
-
 
   private SearchResponse search(@NonNull SearchSourceBuilder builder, @NonNull String index) {
     try {
