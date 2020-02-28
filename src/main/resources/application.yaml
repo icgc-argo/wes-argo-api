@@ -8,6 +8,10 @@ server:
 elastic:
     host: localhost
     port: 9200
+    useHttps: false
+    useAuthentication: false
+    username: elastic
+    password: testing
     maestroIndex: file_centric_1.0
 
 graphql:

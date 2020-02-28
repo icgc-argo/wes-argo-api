@@ -35,6 +35,9 @@ public class ArgoService {
 
   private final RestHighLevelClient client;
   private final String maestroIndex;
+  private final String userName;
+  private final String password;
+  private final boolean useAuthentication;
   private final int DEFAULT_HIT_SIZE = 100;
 
   @Autowired
@@ -43,6 +46,9 @@ public class ArgoService {
       @NonNull ElasticsearchProperties elasticsearchProperties) {
     this.client = client;
     this.maestroIndex = elasticsearchProperties.getMaestroIndex();
+    this.userName = elasticsearchProperties.getUsername();
+    this.password = elasticsearchProperties.getPassword();
+    this.useAuthentication = elasticsearchProperties.getUseAuthentication();
   }
 
   public Optional<FileCentricDocument> getFileCentricDocumentByAnalysisId(@NonNull String id) {

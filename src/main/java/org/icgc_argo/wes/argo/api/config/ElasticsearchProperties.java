@@ -10,5 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class ElasticsearchProperties {
   String host;
   Integer port;
+  Boolean useHttps;
+  Boolean useAuthentication;
+  String username;
+  String password;
   String maestroIndex;
 }
