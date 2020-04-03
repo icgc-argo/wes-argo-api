@@ -1,11 +1,32 @@
-FROM openjdk:11-jdk as builder
+#############################
+#   Builder
+#############################
+FROM adoptopenjdk/openjdk11:jdk-11.0.6_10-alpine-slim as builder
 WORKDIR /usr/src/app
 ADD . .
-RUN ./mvnw clean package
+RUN ./mvnw clean package -DskipTests
 
-FROM openjdk:11-jre-slim
-COPY --from=builder /usr/src/app/target/wes-argo-api-*.jar /usr/bin/wes-argo-api.jar
-RUN adduser --disabled-password --disabled-login --quiet --gecos '' search
-USER search
-CMD ["java", "-ea", "-jar", "/usr/bin/wes-argo-api.jar"]
+#############################
+#   Server
+#############################
+FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
+
+ENV APP_HOME /srv
+ENV APP_USER wfuser
+ENV APP_UID 9999
+ENV APP_GID 9999
+
+
+COPY --from=builder /usr/src/app/target/wes-argo-api-*.jar $APP_HOME/wes-argo-api.jar
+
+RUN addgroup -S -g $APP_GID $APP_USER  \
+    && adduser -S -u $APP_UID -G $APP_USER $APP_USER \
+    && mkdir -p $APP_HOME \
+    && chown -R $APP_UID:$APP_GID $APP_HOME
+
+WORKDIR $APP_HOME
+
+USER $APP_UID
+
+CMD ["java", "-ea", "-jar", "/srv/wes-argo-api.jar"]
 EXPOSE 8080/tcp
