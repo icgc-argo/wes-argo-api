@@ -33,6 +33,8 @@
   "dependencies": {
     "@apollo/gateway": "^0.16.0",
     "apollo-server": "^2.13.1",
+    "apollo-server-express": "^2.13.1",
+    "express": "^4.17.1",
     "graphql": "^15.0.0"
   },
   "prettier": {
