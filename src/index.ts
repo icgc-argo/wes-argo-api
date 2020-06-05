@@ -37,6 +37,12 @@ const server = new ApolloServer({
     })
 });
 
+app.use('/status', (_, res) => {
+    return res.send({
+        'status': 'RUNNING'
+    });
+});
+
 server.applyMiddleware({ app });
 
 

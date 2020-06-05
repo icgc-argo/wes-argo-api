@@ -7,7 +7,7 @@ RUN groupmod -g $APP_GID node
 RUN usermod -u $APP_UID -g $APP_GID node
 RUN mkdir -p /appDir
 RUN chown -R node /appDir
-USER node
+USER 9999
 WORKDIR /appDir
 
 COPY . .
