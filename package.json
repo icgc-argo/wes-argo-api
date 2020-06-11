@@ -31,11 +31,11 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
-    "@apollo/gateway": "^0.16.0",
-    "apollo-server": "^2.14.2",
-    "apollo-server-express": "^2.14.2",
+    "@apollo/gateway": "^0.16.5",
+    "apollo-server": "^2.14.3",
+    "apollo-server-express": "^2.14.3",
     "express": "^4.17.1",
-    "graphql": "^15.0.0"
+    "graphql": "^14.1.0"
   },
   "prettier": {
     "printWidth": 100,
