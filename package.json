@@ -1,6 +1,6 @@
 {
   "name": "rdpc-gateway",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GraphQL Federated Gateway for RDPC",
   "main": "index.js",
   "scripts": {
