@@ -13,6 +13,10 @@ const gateway = new ApolloGateway({
         {
             name: 'workflows',
             url: process.env.WORKFLOW_SEARCH_URL
+        },
+        {
+            name: 'song-search',
+            url: process.env.SONG_SEARCH_URL
         }
     ],
     buildService({ name, url }) {
