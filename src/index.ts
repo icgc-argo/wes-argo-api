@@ -35,7 +35,11 @@ const gateway = new ApolloGateway({
         {
             name: 'song-search',
             url: process.env.SONG_SEARCH_URL
-        }
+        },
+        {
+          name: 'workflow-management',
+          url: process.env.WORKFLOW_MANAGEMENT_URL,
+        },
     ],
     buildService({ name, url }) {
         return new RemoteGraphQLDataSource({
