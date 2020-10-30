@@ -1,6 +1,6 @@
 def dockerRepo = "ghcr.io/icgc-argo/rdpc-gateway"
 def gitHubRepo = "icgc-argo/rdpc-gateway"
-def chartVersion = "1.0.0"
+def chartVersion = "1.1.0"
 def commit = "UNKNOWN"
 def version = "UNKNOWN"
 def uikitVersion = "UNKNOWN"
