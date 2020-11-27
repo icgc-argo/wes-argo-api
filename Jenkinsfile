@@ -1,6 +1,6 @@
-def dockerHubRepo = "icgcargo/rdpc-gateway"
-def githubRepo = "icgc-argo/rdpc-gateway"
-def chartVersion = "1.0.0"
+def dockerRepo = "ghcr.io/icgc-argo/rdpc-gateway"
+def gitHubRepo = "icgc-argo/rdpc-gateway"
+def chartVersion = "1.1.0"
 def commit = "UNKNOWN"
 def version = "UNKNOWN"
 def uikitVersion = "UNKNOWN"
@@ -63,15 +63,15 @@ spec:
             }
             steps {
                 container('docker') {
-                    withCredentials([usernamePassword(credentialsId:'argoDockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                    withCredentials([usernamePassword(credentialsId:'argoContainers', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'docker login ghcr.io -u $USERNAME -p $PASSWORD'
                     }
 
                     // DNS error if --network is default
-                    sh "docker build --network=host . -t ${dockerHubRepo}:edge -t ${dockerHubRepo}:${commit}"
+                    sh "docker build --network=host . -t ${dockerRepo}:edge -t ${dockerRepo}:${commit}"
 
-                    sh "docker push ${dockerHubRepo}:${commit}"
-                    sh "docker push ${dockerHubRepo}:edge"
+                    sh "docker push ${dockerRepo}:${commit}"
+                    sh "docker push ${dockerRepo}:edge"
                 }
             }
         }
@@ -95,15 +95,20 @@ spec:
             }
             steps {
                 container('docker') {
-                    withCredentials([usernamePassword(credentialsId:'argoDockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                    withCredentials([usernamePassword(credentialsId: 'argoGithub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh "git tag ${version}"
+                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${gitHubRepo} --tags"
+                    }
+
+                    withCredentials([usernamePassword(credentialsId:'argoContainers', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'docker login ghcr.io -u $USERNAME -p $PASSWORD'
                     }
 
                     // DNS error if --network is default
-                    sh "docker build --network=host . -t ${dockerHubRepo}:latest -t ${dockerHubRepo}:${version}"
+                    sh "docker build --network=host . -t ${dockerRepo}:latest -t ${dockerRepo}:${version}"
 
-                    sh "docker push ${dockerHubRepo}:${version}"
-                    sh "docker push ${dockerHubRepo}:latest"
+                    sh "docker push ${dockerRepo}:${version}"
+                    sh "docker push ${dockerRepo}:latest"
                 }
             }
         }
