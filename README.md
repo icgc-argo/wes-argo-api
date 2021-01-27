@@ -33,6 +33,10 @@ An example of this dynamic join at query time is something like this:
 }
 ```
 
+## Auth
+
+Authorization headers are passed through to the underlying services to resolve as if the query was directly addressed to them. For example, in the case of `JWT` auth, if the underlying services have differently scoped permissions, and all the required scopes are not present in the request, you will only receive data from the services that have the appropriate scopes and an error response nested within the query response for the service where the scope was missing/invalid/unauthorized.
+
 ## Tech Stack
 - NodeJS
 - Typescript
@@ -48,7 +52,7 @@ An example of this dynamic join at query time is something like this:
 git clone git@github.com:icgc-argo/rdpc-gateway.git
 npm i
 
-# Env Variables (recommended you change these to suit your needs)
+# Env Variables (default localhost config)
 cp .env.example .env
 
 # Start Locally
