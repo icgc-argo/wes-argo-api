@@ -64,3 +64,7 @@ npm build
 # Docker
 docker build -t ##REPO##:##TAG## .
 ```
+
+## !! Important Note (Restart Required) !!
+
+Any schema changes in the underlying services connected to `rdpc-gateway` will require a restart of the gateway in order to correctly stitch the schemas together.
