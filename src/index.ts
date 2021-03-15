@@ -63,11 +63,12 @@ const server = new ApolloServer({
   }),
 });
 
+// *** Setup Workflow-API proxy ***
 // Workflow-Api graphql is accessed via Apollo, so reject here
 app.use('/workflow-api/graphql', (_, res) => res.status(404).send());
 app.use('/workflow-api/v2/api-docs', async (req, res) => {
-  // api-docs has no knowledge of proxy so it points to actual service which is  misleading
-  // since we are proxying through gateway, so replace with gateway's host and basePath
+  // api-docs has no knowledge of proxy so it points to actual service which is misleading
+  // since we are proxying through gateway, replace with gateway's host and basePath
   const apiDoc = await fetch(WORKFLOW_API_URL + '/v2/api-docs').then((res) => res.json());
   apiDoc.host = `${req.hostname}:${port}`;
   apiDoc.basePath = '/workflow-api';
@@ -83,6 +84,7 @@ app.use(
   }),
 );
 
+// *** Setup Health Endpoint ***
 app.use('/status', (_, res) => {
   return res.send({
     status: 'RUNNING',
